@@ -1,0 +1,23 @@
+{
+  "name": "dalkom",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnlow/Dalkom.git"
+  },
+  "keywords": [],
+  "author": "Gnlow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gnlow/Dalkom/issues"
+  },
+  "homepage": "https://github.com/gnlow/Dalkom#readme",
+  "dependencies": {
+    "redom": "^3.25.1"
+  }
+}
