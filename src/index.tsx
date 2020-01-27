@@ -1,27 +1,40 @@
 import React, {useRef, useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 
+function Label(props : {
+    content: string;
+}) {
+    const texts = props.content.split(/[({<)}>]/).map((text, index) => {
+        return <tspan>
+            {text}
+        </tspan>;
+    });
+    return <text {...props}>
+        {texts}
+    </text>;
+}
+
 function Block(props : {
-    content: React.ReactNode;
+    content: string;
     color?: string;
 }) {
-    const textRef = useRef < SVGTextElement > (null);
+    const textRef = useRef<SVGTextElement>(null);
     const [textWidth,
         setTextWidth] = useState(40);
     useEffect(() => {
         setTextWidth(textRef.current
             ?.getBBox().width || 40);
     });
-    const text = <text
+    const text = <Label
         x="7"
         y="6.5"
         style={{
         fontSize: "5px",
-        fill: "white",
+        fill: "white"
     }}
-        ref={textRef}>
-        {props.content}
-    </text>;
+        ref={textRef}
+        content={props.content}>
+    </Label>;
     const blockPath = `M 0 0 
         l 5 5 
         v -3 
@@ -36,7 +49,6 @@ function Block(props : {
     return <g transform="translate(200, 100) scale(5)">
         <path d={blockPath} fill={props.color}/> {text}
     </g>;
-
 }
-var element = <Block content="콘솔에 (text) 찍기" color="#7a00b7" />;
+var element = <Block content="콘솔에 (text) 찍기" color="#7a00b7"/>;
 ReactDOM.render(element, document.getElementById("editor"));
