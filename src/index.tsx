@@ -1,18 +1,18 @@
 import React, {useRef, useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 
-function Label(props : {
+const Label = React.forwardRef((props : {
     content: string;
-}) {
+}, ref) => {
     const texts = props.content.split(/[({<)}>]/).map((text, index) => {
         return <tspan>
             {text}
         </tspan>;
     });
-    return <text {...props}>
+    return <text {...props} ref={ref}>
         {texts}
     </text>;
-}
+});
 
 function Block(props : {
     content: string;
