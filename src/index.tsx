@@ -1,19 +1,14 @@
 import React, {useRef, useState, useEffect} from "react";
 import ReactDOM from "react-dom";
-import {useDrag, DndProvider} from "react-dnd";
-import Backend from "react-dnd-html5-backend";
 
 const Label = React.forwardRef((props : {
     content: string;
 }, ref) => {
-    const texts = props
-        .content
-        .split(/[({<)}>]/)
-        .map((text, index) => {
-            return <tspan>
-                {text}
-            </tspan>;
-        });
+    const texts = props.content.split(/[({<)}>]/).map((text, index) => {
+        return <tspan>
+            {text}
+        </tspan>;
+    });
     return <text {...props} ref={ref}>
         {texts}
     </text>;
@@ -23,7 +18,7 @@ function Block(props : {
     content: string;
     color?: string;
 }) {
-    const textRef = useRef < SVGTextElement > (null);
+    const textRef = useRef<SVGTextElement>(null);
     const [textWidth,
         setTextWidth] = useState(40);
     useEffect(() => {
@@ -38,20 +33,8 @@ function Block(props : {
         fill: "white"
     }}
         ref={textRef}
-        content={props.content}></Label>;
-
-    const [
-        {
-            isDragging
-        },
-        drag] = useDrag({
-        item: {
-            type: "block"
-        },
-        collect: monitor => ({
-            isDragging: !!monitor.isDragging()
-        })
-    });
+        content={props.content}>
+    </Label>;
     const blockPath = `M 0 0 
         l 5 5 
         v -3 
@@ -63,21 +46,9 @@ function Block(props : {
         v 4 
         l -5 -5
         z`;
-    return <g
-        transform="translate(200, 100) scale(5)"
-        ref={drag}
-        style={{
-        opacity: isDragging
-            ? 0.5
-            : 1,
-        cursor: 'move'
-    }}>
+    return <g transform="translate(200, 100) scale(5)">
         <path d={blockPath} fill={props.color}/> {text}
     </g>;
 }
-var element = <DndProvider backend={Backend}>
-    <svg>
-        <Block content="콘솔에 (text) 찍기" color="#7a00b7"/>
-    </svg>
-</DndProvider>;
-ReactDOM.render(element, document.getElementById("app"));
+var element = <Block content="콘솔에 (text) 찍기" color="#7a00b7"/>;
+ReactDOM.render(element, document.getElementById("editor"));
