@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/gnlow/Dalkom#readme",
   "dependencies": {
-    "pixi.js": "^5.2.1"
+    "pixi.js": "^5.2.1",
+    "redom": "^3.25.1"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4",

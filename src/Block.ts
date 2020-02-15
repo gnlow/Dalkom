@@ -1,3 +1,5 @@
+import { svg, mount, setChildren, setAttr } from "redom";
+
 const getBlockPath = (textWidth: number) => {
     return `M 0 0 
     l 5 5 
@@ -12,24 +14,24 @@ const getBlockPath = (textWidth: number) => {
     z`;
 }
 
-const SVG = "http://www.w3.org/2000/svg";
-
-let group = document.createElementNS(SVG, "g");
-let block = document.createElementNS(SVG, "path");
-let text = document.createElementNS(SVG, "text");
-
-group.setAttributeNS(null, "transform", "scale(5)")
-
-block.setAttributeNS(null, "fill", "blue");
+let group = <SVGGElement> svg("g", {
+    transform: "scale(5)",
+});
+let block = <SVGPathElement> svg("path", {
+    fill: "blue",
+});
+let text = <SVGTextElement> svg("text", {
+    x: 7,
+    y: 6.5,
+    "font-size": "5px",
+});
 
 text.innerHTML = "Hello";
-text.setAttributeNS(null, "x", "7");
-text.setAttributeNS(null, "y", "6.5");
-text.setAttributeNS(null, "font-size", "5px");
 
-group.appendChild(block);
-group.appendChild(text);
+setChildren(group, [block, text]);
 
-document.getElementById("editor")?.appendChild(group);
+mount(<HTMLElement>document.getElementById("editor"), group);
 
-block.setAttributeNS(null, "d", getBlockPath(text.getBBox().width || 40));
+setAttr(block, {
+    d: getBlockPath(text.getBBox().width || 40),
+});
