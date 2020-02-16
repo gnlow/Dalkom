@@ -19,12 +19,12 @@ const startDrag = (e: MouseEvent) => {
     selected = <SVGElement | null> e.target;
     offset = getMousePosition(e);
 
-    let transforms = (<SVGGElement>selected).transform.baseVal;
+    let transforms = (<SVGGElement>selected?.parentNode)?.transform.baseVal;
     if(transforms.length == 0 || transforms.getItem(0) != SVGTransform.SVG_TRANSFORM_TRANSLATE) {
         let translate = svgsvg.createSVGTransform();
         translate.setTranslate(0, 0);
 
-        (<SVGGElement>selected).transform.baseVal.insertItemBefore(translate, 0);
+        (<SVGGElement>selected?.parentNode).transform.baseVal.insertItemBefore(translate, 0);
     }
     transform = transforms.getItem(0);
     offset.x -= transform.matrix.e;
@@ -44,7 +44,7 @@ const endDrag = (e: MouseEvent) => {
 function getMousePosition(e: MouseEvent) {
     var CTM = <DOMMatrix> svgsvg.getScreenCTM();
     return {
-      x: (e.clientX - CTM.e) / CTM.a / 5,
-      y: (e.clientY - CTM.f) / CTM.d / 5,
+      x: (e.clientX - CTM.e) / CTM.a,
+      y: (e.clientY - CTM.f) / CTM.d,
     };
   }
