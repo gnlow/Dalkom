@@ -8,14 +8,13 @@ let svgsvg = <SVGSVGElement> svg("svg");
 
 export const makeDraggable = (targetInfo: SVGGElement) => {
     let svg = targetInfo;
-    console.log(svg);
     svg.addEventListener("mousedown", startDrag);
-    svg.addEventListener("mousemove", drag);
+    svg.parentElement?.addEventListener("mousemove", drag);
     svg.addEventListener("mouseup", endDrag);
-    svg.addEventListener("mouseleave", endDrag);
+    //svg.addEventListener("mouseleave", endDrag);
 };
 const startDrag = (e: MouseEvent) => {
-    console.log((<SVGGElement>e.target).parentNode?.children);
+    console.log("startDrag");
     selected = <SVGElement | null> e.target;
     offset = getMousePosition(e);
 
@@ -38,6 +37,7 @@ const drag = (e: MouseEvent) => {
     }
 };
 const endDrag = (e: MouseEvent) => {
+    console.log("endDrag");
     selected = null;
 };
 

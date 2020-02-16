@@ -2,6 +2,8 @@ import {
     Application,
 } from "pixi.js";
 
+import { mount } from "redom";
+
 let app = new Application({
     width: 1920,
     height: 1080,
@@ -10,4 +12,4 @@ let app = new Application({
     resolution: 1,
 });
 app.renderer.resize(640, 360);
-document.body.appendChild(app.view);
+//mount(<HTMLDivElement>document.getElementById("player"), app.view);
