@@ -1,4 +1,5 @@
 import { svg, mount, setChildren, setAttr } from "redom";
+import { makeDraggable } from "./drag";
 
 const getBlockPath = (textWidth: number) => {
     return `M 0 0 
@@ -24,9 +25,7 @@ let text = <SVGTextElement> svg("text", {
     x: 7,
     y: 6.5,
     "font-size": "5px",
-});
-
-text.innerHTML = "Hello";
+}, "Hello");
 
 setChildren(group, [block, text]);
 
@@ -35,3 +34,5 @@ mount(<HTMLElement>document.getElementById("editor"), group);
 setAttr(block, {
     d: getBlockPath(text.getBBox().width || 40),
 });
+
+makeDraggable(group);
