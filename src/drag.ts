@@ -1,4 +1,4 @@
-import { setAttr, svg } from "redom";
+import { svg } from "redom";
 
 let selected: SVGElement | null;
 
@@ -6,15 +6,15 @@ let transform: SVGTransform, offset = {x: 0, y: 0};
 
 let svgsvg = <SVGSVGElement> svg("svg");
 
-export const makeDraggable = (targetInfo: SVGGElement) => {
-    let svg = targetInfo;
-    svg.addEventListener("mousedown", startDrag);
-    svg.parentElement?.addEventListener("mousemove", drag);
-    svg.addEventListener("mouseup", endDrag);
+export const makeDraggable = (e: Event) => {
+    let svg = e.target;
+    svg?.addEventListener("mousedown", <any> startDrag);
+    svg?.addEventListener("mousemove", <any> drag);
+    svg?.addEventListener("mouseup", <any> endDrag);
     //svg.addEventListener("mouseleave", endDrag);
 };
 const startDrag = (e: MouseEvent) => {
-    console.log("startDrag");
+    console.log(e.target);
     selected = <SVGElement | null> e.target;
     offset = getMousePosition(e);
 

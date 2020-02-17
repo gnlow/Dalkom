@@ -1,7 +1,6 @@
 import { svg, mount, setChildren, setAttr } from "redom";
-import { makeDraggable } from "./drag";
 
-const getBlockPath = (textWidth: number) => {
+const getBlockPath = (textWidth: number = 40) => {
     return `M 0 0 
     l 5 5 
     v -3 
@@ -13,7 +12,12 @@ const getBlockPath = (textWidth: number) => {
     v 4 
     l -5 -5
     z`;
-}
+};
+const correctWidth = (block: SVGPathElement, text: SVGTextElement) => {
+    setAttr(block, {
+        d: getBlockPath(text.getBBox().width || 40),
+    });
+};
 
 let group = <SVGGElement> svg("g", {
     transform: "scale(5)",
@@ -31,8 +35,4 @@ setChildren(group, [block, text]);
 
 mount(<HTMLElement>document.getElementById("editor"), group);
 
-setAttr(block, {
-    d: getBlockPath(text.getBBox().width || 40),
-});
-
-makeDraggable(group);
+correctWidth(block, text)
