@@ -1,4 +1,4 @@
-import { svg, mount, setChildren, setAttr } from "redom";
+import { svg, mount, setChildren, setAttr, RedomElement } from "redom";
 
 const getBlockPath = (textWidth: number = 40) => {
     return `M 0 0 
@@ -18,21 +18,24 @@ const correctWidth = (block: SVGPathElement, text: SVGTextElement) => {
         d: getBlockPath(text.getBBox().width || 40),
     });
 };
+export const mountBlock = (parent: RedomElement) => {
+    let group = <SVGGElement> svg("g", {
+        transform: "scale(5)",
+    });
+    let block = <SVGPathElement> svg("path", {
+        fill: "blue",
+        draggable: true,
+    });
+    let text = <SVGTextElement> svg("text", {
+        x: 7,
+        y: 6.5,
+        "font-size": "5px",
+        draggable: true,
+    }, "Hello");
 
-let group = <SVGGElement> svg("g", {
-    transform: "scale(5)",
-});
-let block = <SVGPathElement> svg("path", {
-    fill: "blue",
-});
-let text = <SVGTextElement> svg("text", {
-    x: 7,
-    y: 6.5,
-    "font-size": "5px",
-}, "Hello");
+    setChildren(group, [block, text]);
 
-setChildren(group, [block, text]);
+    mount(parent, group);
 
-mount(<HTMLElement>document.getElementById("editor"), group);
-
-correctWidth(block, text)
+    correctWidth(block, text)
+};
