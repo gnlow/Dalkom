@@ -23,7 +23,7 @@ export const mountBlock = (parent: RedomElement) => {
         transform: "scale(5)",
     });
     let block = <SVGPathElement> svg("path", {
-        fill: "blue",
+        fill: "skyblue",
         draggable: true,
     });
     let text = <SVGTextElement> svg("text", {

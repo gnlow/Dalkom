@@ -20,7 +20,7 @@ let editor = svg("svg", {
     id: "editor",
     onload: makeDraggable({
         snap(x, y){
-            return [~~(x/100)*100, ~~(y/55)*55];
+            return [Math.round(x/100)*100, Math.round(y/55)*55];
         }
     }),
 });

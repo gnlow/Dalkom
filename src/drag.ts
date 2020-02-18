@@ -56,4 +56,4 @@ function getMousePosition(e: MouseEvent) {
       x: (e.clientX - CTM.e) / CTM.a,
       y: (e.clientY - CTM.f) / CTM.d,
     };
-  }
+}
