@@ -1,4 +1,4 @@
-import { svg, mount, setChildren, setAttr, RedomElement } from "redom";
+import { svg, mount, setChildren, setAttr, RedomElement, text } from "redom";
 
 const getBlockPath = (textWidth: number = 40) => {
     return `M 0 0 
@@ -26,16 +26,28 @@ export const mountBlock = (parent: RedomElement) => {
         fill: "skyblue",
         draggable: true,
     });
-    let text = <SVGTextElement> svg("text", {
+    let innerText = <SVGTextElement> svg("text", {
         x: 7,
         y: 6.5,
         "font-size": "5px",
         draggable: true,
-    }, "Hello");
+    });
+    "(글) 쓰기".split(/[({<)}>]/).forEach((str, i) => {
+        if(i % 2){
+            mount(innerText, svg("tspan", {
+                x: 7,
+                y: 6.5,
+                "font-size": "5px",
+                draggable: true,
+            }, str));
+        }else if(str){
+            mount(innerText, text(str));
+        }
+    })
 
-    setChildren(group, [block, text]);
+    setChildren(group, [block, innerText]);
 
     mount(parent, group);
 
-    correctWidth(block, text)
+    correctWidth(block, innerText)
 };
