@@ -38,7 +38,6 @@ export const mountBlock = (parent: RedomElement) => {
                 x: 7,
                 y: 6.5,
                 "font-size": "5px",
-                draggable: true,
             }, str));
         }else if(str){
             mount(innerText, text(str));
